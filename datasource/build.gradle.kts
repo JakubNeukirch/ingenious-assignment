@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "tech.stonks.presentation"
+    namespace = "tech.stonks.datasource"
     compileSdk = 34
 
     defaultConfig {
@@ -31,6 +31,5 @@ android {
 
 dependencies {
     implementation(libs.android.ktx)
-    implementation(libs.lifecycle.viewmodel.ktx)
     testImplementation(libs.junit)
 }
