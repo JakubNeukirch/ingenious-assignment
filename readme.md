@@ -17,6 +17,10 @@ The modules currently implemented:
 - `datasource` - the `datasource` layer, here you place all the `DataSource`s which contain lower-level code to fetch
   data from the network or database.
 
+There could also be a `domain` module which would be the most stable one, and it would define the actions that can be
+invoked (right now they are defined in `Repository` interfaces). However, this usually creates a need for a much more
+models and mappers, so for simplicity it was omitted.
+
 ## Dependencies
 
 The gradle dependencies are defined in `/gradle/libs.versions.toml` file for consistency across modules.
