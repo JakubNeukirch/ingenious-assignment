@@ -32,5 +32,6 @@ android {
 dependencies {
     implementation(libs.android.ktx)
     implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.lifecycle.livedata.ktx)
     testImplementation(libs.junit)
 }

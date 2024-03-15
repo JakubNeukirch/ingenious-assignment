@@ -56,6 +56,9 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
     implementation(libs.compose.navigation)
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
     testImplementation(libs.junit)
     debugImplementation(libs.compose.ui.tooling)
 

@@ -1,4 +1,4 @@
-package tech.stonks.githubusers.ui.theme
+package tech.stonks.ui.styles.theme
 
 import androidx.compose.ui.graphics.Color
 

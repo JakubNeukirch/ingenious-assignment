@@ -37,6 +37,8 @@ android {
 
 dependencies {
 
+    implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.android.ktx)
     testImplementation(libs.junit)
 
@@ -46,6 +48,7 @@ dependencies {
     implementation(libs.compose.ui.graphics)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
+    implementation(libs.compose.livedata)
 
     implementation(project(":presentation"))
 }

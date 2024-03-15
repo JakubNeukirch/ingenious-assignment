@@ -1,4 +1,4 @@
-package tech.stonks.githubusers.ui.theme
+package tech.stonks.ui.styles.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
