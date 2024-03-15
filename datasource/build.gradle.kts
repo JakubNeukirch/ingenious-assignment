@@ -30,6 +30,11 @@ android {
 }
 
 dependencies {
+    implementation(project(":data"))
     implementation(libs.android.ktx)
+    implementation(libs.retrofit.core)
+    implementation(libs.moshi.core)
     testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
 }

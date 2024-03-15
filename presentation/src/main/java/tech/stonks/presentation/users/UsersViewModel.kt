@@ -2,7 +2,7 @@ package tech.stonks.presentation.users
 
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import tech.stonks.presentation.common.BaseViewModel
+import tech.stonks.presentation.shared.BaseViewModel
 import tech.stonks.presentation.users.model.UsersState
 import tech.stonks.presentation.users.repository.GetUsersRepository
 

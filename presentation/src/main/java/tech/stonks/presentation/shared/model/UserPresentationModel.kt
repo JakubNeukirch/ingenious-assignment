@@ -1,4 +1,4 @@
-package tech.stonks.presentation.common.model
+package tech.stonks.presentation.shared.model
 
 data class UserPresentationModel(
     val id: String,

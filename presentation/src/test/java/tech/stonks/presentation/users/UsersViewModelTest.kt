@@ -18,7 +18,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
-import tech.stonks.presentation.common.model.UserPresentationModel
+import tech.stonks.presentation.shared.model.UserPresentationModel
 import tech.stonks.presentation.users.model.UsersState
 import tech.stonks.presentation.users.repository.GetUsersRepository
 

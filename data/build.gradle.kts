@@ -31,6 +31,8 @@ android {
 
 dependencies {
     implementation(project(":presentation"))
-    testImplementation(libs.junit)
     implementation(libs.kotlinx.coroutines)
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
 }

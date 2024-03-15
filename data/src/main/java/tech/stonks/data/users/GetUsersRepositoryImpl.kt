@@ -1,15 +1,15 @@
 package tech.stonks.data.users
 
-import kotlinx.coroutines.delay
-import tech.stonks.presentation.common.model.UserPresentationModel
+import tech.stonks.data.shared.datasource.UsersDataSource
+import tech.stonks.data.shared.mapper.UserDataToPresentationMapper
+import tech.stonks.presentation.shared.model.UserPresentationModel
 import tech.stonks.presentation.users.repository.GetUsersRepository
 
-class GetUsersRepositoryImpl : GetUsersRepository {
+class GetUsersRepositoryImpl(
+    private val _userDataSource: UsersDataSource,
+    private val _userDataToPresentationMapper: UserDataToPresentationMapper
+) : GetUsersRepository {
     override suspend fun getUsers(): List<UserPresentationModel> {
-        delay(1000)
-        return listOf(
-            UserPresentationModel("1", "John Doe"),
-            UserPresentationModel("2", "Jane Doe"),
-        )
+        return _userDataSource.getUsers().map(_userDataToPresentationMapper::map)
     }
 }

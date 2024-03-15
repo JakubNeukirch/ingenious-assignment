@@ -1,6 +1,6 @@
 package tech.stonks.presentation.users.model
 
-import tech.stonks.presentation.common.model.UserPresentationModel
+import tech.stonks.presentation.shared.model.UserPresentationModel
 
 data class UsersState(
     val users: List<UserPresentationModel>,

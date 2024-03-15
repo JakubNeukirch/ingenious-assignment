@@ -1,4 +1,4 @@
-package tech.stonks.presentation.common
+package tech.stonks.presentation.shared
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
