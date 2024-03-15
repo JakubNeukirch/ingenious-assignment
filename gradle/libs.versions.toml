@@ -7,7 +7,9 @@ appcompat = "1.6.1"
 material = "1.11.0"
 [libraries]
 android-ktx = { module = "androidx.core:core-ktx", version = "1.12.0" }
+android-test = { module = "androidx.arch.core:core-testing", version = "2.2.0" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version = "1.7.3" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version = "1.7.3" }
 lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
 lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycle" }
@@ -24,10 +26,8 @@ koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core" }
 koin-android = { module = "io.insert-koin:koin-android" }
 junit = { module = "junit:junit", version = "4.13.2" }
-androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+mockk = { module = "io.mockk:mockk", version = "1.13.9" }
+livedata-test = { module = "com.jraska.livedata:testing-ktx", version = "1.3.0" }
 [plugins]
 android-application = { id = "com.android.application", version = "8.2.0" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version = "1.9.22" }

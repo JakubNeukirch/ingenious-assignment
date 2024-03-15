@@ -16,7 +16,12 @@ class UsersViewModel(
                 modifyState { it.copy(isLoading = false, users = users) }
             }
         } catch (ex: Exception) {
-            //todo add error handling
+            modifyState {
+                it.copy(
+                    isLoading = false,
+                    error = UsersState.Error.UNKNOWN
+                )
+            }//todo add handling other error types
         }
     }
 }

@@ -34,4 +34,8 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.livedata.ktx)
     testImplementation(libs.junit)
+    testImplementation(libs.livedata.test)
+    testImplementation(libs.android.test)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
 }
