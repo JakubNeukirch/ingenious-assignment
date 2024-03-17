@@ -17,6 +17,7 @@ compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose-material3 = { module = "androidx.compose.material3:material3" }
+compose-material = { module = "androidx.compose.material:material" }
 compose-livedata = { module = "androidx.compose.runtime:runtime-livedata" }
 compose-navigation = { module = "androidx.navigation:navigation-compose", version = "2.7.7" }
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin" }
@@ -24,6 +25,7 @@ koin-core = { module = "io.insert-koin:koin-core" }
 koin-android = { module = "io.insert-koin:koin-android" }
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version = "2.9.0" }
 retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version = "2.9.0" }
+coil = { module = "io.coil-kt:coil-compose", version = "2.6.0" }
 moshi-core = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
 moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
 junit = { module = "junit:junit", version = "4.13.2" }

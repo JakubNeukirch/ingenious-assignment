@@ -9,7 +9,15 @@ import tech.stonks.presentation.users.repository.GetUsersRepository
 class UsersViewModel(
     private val _getUsersRepository: GetUsersRepository
 ) : BaseViewModel<UsersState>(UsersState.initial()) {
-    fun onEntered() = viewModelScope.launch {
+    fun onEntered() {
+        loadData()
+    }
+
+    fun onRefresh() {
+        loadData()
+    }
+
+    private fun loadData() = viewModelScope.launch {
         modifyState { it.copy(isLoading = true) }
         try {
             _getUsersRepository.getUsers().let { users ->

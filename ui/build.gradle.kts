@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.android.ktx)
+    implementation(libs.coil)
     testImplementation(libs.junit)
 
 
@@ -47,7 +48,9 @@ dependencies {
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.graphics)
     implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.compose.ui.tooling)
     implementation(libs.compose.material3)
+    implementation(libs.compose.material)
     implementation(libs.compose.livedata)
 
     implementation(project(":presentation"))

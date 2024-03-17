@@ -9,13 +9,13 @@ import org.junit.Before
 import org.junit.Test
 import tech.stonks.data.shared.datasource.UsersDataSource
 import tech.stonks.data.shared.model.UserDataModel
-import tech.stonks.datasource.shared.mapper.UserMapper
+import tech.stonks.datasource.shared.mapper.UserDataMapper
 import tech.stonks.datasource.shared.model.api.UserApiModel
 import tech.stonks.datasource.shared.service.UsersApiService
 
 class UsersDataSourceTest {
     private lateinit var _usersApiService: UsersApiService
-    private lateinit var _usersMapper: UserMapper
+    private lateinit var _usersMapper: UserDataMapper
     private lateinit var _usersDataSource: UsersDataSource
 
     @Before
@@ -57,6 +57,8 @@ class UsersDataSourceTest {
             UserDataModel(
                 id = "1",
                 name = "login",
+                avatarUrl = "avatarUrl",
+                followers = 1
             )
         )
         coEvery { _usersApiService.getUsers() } returns listApi

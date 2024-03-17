@@ -9,10 +9,10 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import tech.stonks.data.shared.datasource.UsersDataSource
-import tech.stonks.data.shared.mapper.UserDataToPresentationMapper
+import tech.stonks.data.shared.mapper.UserPresentationMapper
 import tech.stonks.data.users.GetUsersRepositoryImpl
 import tech.stonks.datasource.shared.datasource.UsersDataSourceImpl
-import tech.stonks.datasource.shared.mapper.UserMapper
+import tech.stonks.datasource.shared.mapper.UserDataMapper
 import tech.stonks.datasource.shared.service.UsersApiService
 import tech.stonks.presentation.users.UsersViewModel
 import tech.stonks.presentation.users.repository.GetUsersRepository
@@ -24,11 +24,11 @@ private val presentationModule = module {
 private val dataModule = module {
     single<GetUsersRepository> { get<GetUsersRepositoryImpl>() }
     singleOf(::GetUsersRepositoryImpl)
-    single { UserDataToPresentationMapper() }
+    single { UserPresentationMapper() }
 }
 
 private val dataSourceModule = module {
-    single { UserMapper() }
+    single { UserDataMapper() }
     single<UsersDataSource> { get<UsersDataSourceImpl>() }
     singleOf(::UsersDataSourceImpl)
     single<Moshi> {
@@ -43,7 +43,7 @@ private val dataSourceModule = module {
             .build()
             .create(UsersApiService::class.java)
     }
-    single { UserMapper() }
+    single { UserDataMapper() }
 }
 
 val appModule: List<Module> = listOf(

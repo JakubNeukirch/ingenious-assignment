@@ -9,14 +9,14 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import tech.stonks.data.shared.datasource.UsersDataSource
-import tech.stonks.data.shared.mapper.UserDataToPresentationMapper
+import tech.stonks.data.shared.mapper.UserPresentationMapper
 import tech.stonks.data.shared.model.UserDataModel
 import tech.stonks.presentation.shared.model.UserPresentationModel
 import tech.stonks.presentation.users.repository.GetUsersRepository
 
 class GetUserRepositoryTest {
     private lateinit var userDataSource: UsersDataSource
-    private lateinit var userMapper: UserDataToPresentationMapper
+    private lateinit var userMapper: UserPresentationMapper
     private lateinit var getUsersRepository: GetUsersRepository
 
     @Before
@@ -30,12 +30,12 @@ class GetUserRepositoryTest {
     fun `when getUsers is called then return list of users`() = runTest {
         // Given
         val users = listOf(
-            UserDataModel("1", "John"),
-            UserDataModel("2", "Doe")
+            UserDataModel("1", "John", "url", 10),
+            UserDataModel("2", "Doe", "url", 20),
         )
         val userPresentationModels = listOf(
-            UserPresentationModel("1", "John"),
-            UserPresentationModel("2", "Doe")
+            UserPresentationModel("1", "John", "url", 10),
+            UserPresentationModel("2", "Doe", "url", 20),
         )
         coEvery { userDataSource.getUsers() } returns users
         every { userMapper.map(users[0]) } returns userPresentationModels[0]

@@ -22,6 +22,7 @@ import tech.stonks.presentation.shared.model.UserPresentationModel
 import tech.stonks.presentation.users.model.UsersState
 import tech.stonks.presentation.users.repository.GetUsersRepository
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class UsersViewModelTest {
     @get:Rule
     val rule: TestRule = InstantTaskExecutorRule()
@@ -44,8 +45,8 @@ class UsersViewModelTest {
     @Test
     fun `when onEntered should publish users`() = runTest {
         val users = listOf(
-            UserPresentationModel("1", "John Doe"),
-            UserPresentationModel("2", "Jane Doe"),
+            UserPresentationModel("1", "John Doe", "url", 10),
+            UserPresentationModel("2", "Jane Doe", "url", 20),
         )
         coEvery { _getUsersRepository.getUsers() } returns users
 
