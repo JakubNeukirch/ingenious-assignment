@@ -10,9 +10,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -22,12 +20,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import tech.stonks.presentation.shared.model.UserPresentationModel
 import tech.stonks.presentation.users.UsersViewModel
 import tech.stonks.presentation.users.model.UsersState
+import tech.stonks.ui.R
 import tech.stonks.ui.page.users.mapper.UsersDestinationMapper
 
 @Composable
@@ -52,7 +52,7 @@ fun UsersPage(
     )
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
 private fun Content(
     state: UsersState,
@@ -61,7 +61,16 @@ private fun Content(
 ) {
     val refreshState = rememberPullRefreshState(state.isLoading, onRefresh)
 
-    Scaffold {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(text = stringResource(id = R.string.users_title)) },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.background,
+                )
+            )
+        }
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()

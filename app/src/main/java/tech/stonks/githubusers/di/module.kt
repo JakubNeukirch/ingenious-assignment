@@ -2,6 +2,7 @@ package tech.stonks.githubusers.di
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
@@ -14,11 +15,17 @@ import tech.stonks.data.users.GetUsersRepositoryImpl
 import tech.stonks.datasource.shared.datasource.UsersDataSourceImpl
 import tech.stonks.datasource.shared.mapper.UserDataMapper
 import tech.stonks.datasource.shared.service.UsersApiService
+import tech.stonks.presentation.user_details.UserDetailsViewModel
 import tech.stonks.presentation.users.UsersViewModel
 import tech.stonks.presentation.users.repository.GetUsersRepository
 
 private val presentationModule = module {
     viewModelOf(::UsersViewModel)
+    viewModel { parameters ->
+        UserDetailsViewModel(
+            _userId = parameters.get(),
+        )
+    }
 }
 
 private val dataModule = module {
