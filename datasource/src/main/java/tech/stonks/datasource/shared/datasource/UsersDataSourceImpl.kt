@@ -13,4 +13,8 @@ class UsersDataSourceImpl(
         //todo add proper error mapping to DataException
         return _usersApi.getUsers().map(_userDataMapper::mapApiToData)
     }
+
+    override suspend fun getUser(id: String): UserDataModel {
+        return _usersApi.getUserById(id).let(_userDataMapper::mapApiToData)
+    }
 }
