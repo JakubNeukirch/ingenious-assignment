@@ -25,7 +25,8 @@ private val presentationModule = module {
     viewModelOf(::UsersViewModel)
     viewModel { parameters ->
         UserDetailsViewModel(
-            _userId = parameters.get(),
+            _userLogin = parameters.get(),
+            _getUserRepository = get(),
         )
     }
 }

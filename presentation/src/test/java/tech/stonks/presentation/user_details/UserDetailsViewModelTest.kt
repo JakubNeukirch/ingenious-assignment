@@ -48,7 +48,7 @@ class UserDetailsViewModelTest {
     fun `when onEntered should publish user details`() {
         val user = UserPresentationModel(
             id = "1",
-            name = "John Doe",
+            login = "John Doe",
             avatarUrl = "url",
             followers = 10
         )

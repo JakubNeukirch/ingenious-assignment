@@ -18,8 +18,8 @@ class UsersViewModel(
         loadData()
     }
 
-    fun onUserClicked(id: String) {
-        navigateTo(UsersPresentationDestination.UserDetails(id))
+    fun onUserClicked(login: String) {
+        navigateTo(UsersPresentationDestination.UserDetails(login))
     }
 
     private fun loadData() = viewModelScope.launch {
@@ -29,6 +29,7 @@ class UsersViewModel(
                 modifyState { it.copy(isLoading = false, users = users) }
             }
         } catch (ex: Exception) {
+            ex.printStackTrace()
             modifyState {
                 it.copy(
                     isLoading = false,

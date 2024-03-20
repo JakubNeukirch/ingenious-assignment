@@ -9,17 +9,18 @@ import tech.stonks.presentation.user_details.model.UserDetailsState
 import tech.stonks.presentation.user_details.repository.GetUserRepository
 
 class UserDetailsViewModel(
-    private val _userId: String,
+    private val _userLogin: String,
     private val _getUserRepository: GetUserRepository,
 ) : BaseViewModel<UserDetailsState>(UserDetailsState.initial()) {
     fun onEntered() {
         modifyState { it.withLoading(true) }
         viewModelScope.launch {
             try {
-                val user = _getUserRepository.getUser(_userId)
+                val user = _getUserRepository.getUser(_userLogin)
                 modifyState { it.withUser(user).withLoading(false) }
             } catch (ex: Exception) {
                 //todo handle more errors
+                ex.printStackTrace()
                 modifyState { it.withError(UserDetailsError.UNKNOWN_ERROR).withLoading(false) }
             }
         }

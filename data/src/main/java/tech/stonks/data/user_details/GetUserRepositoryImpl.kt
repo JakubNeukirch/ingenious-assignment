@@ -9,7 +9,7 @@ class GetUserRepositoryImpl(
     private val _usersDataSource: UsersDataSource,
     private val _userMapper: UserPresentationMapper,
 ) : GetUserRepository {
-    override suspend fun getUser(userId: String): UserPresentationModel {
-        return _usersDataSource.getUser(userId).let(_userMapper::map)
+    override suspend fun getUser(userLogin: String): UserPresentationModel {
+        return _usersDataSource.getUser(userLogin).let(_userMapper::map)
     }
 }

@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import org.koin.androidx.compose.koinViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.context.GlobalContext.get
 import org.koin.core.parameter.parametersOf
@@ -49,7 +50,7 @@ class MainActivity : ComponentActivity() {
                         composable("users/{userId}") { backStackEntry ->
                             val userId = backStackEntry.arguments?.getString("userId")
                                 ?: throw IllegalStateException("Missing userId")
-                            UserDetailsPage(viewModel = getViewModel { parametersOf(userId) })
+                            UserDetailsPage(viewModel = koinViewModel(parameters = { parametersOf(userId) }))
                         }
                     }
                 }

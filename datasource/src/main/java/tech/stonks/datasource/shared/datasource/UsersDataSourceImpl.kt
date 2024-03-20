@@ -14,7 +14,7 @@ class UsersDataSourceImpl(
         return _usersApi.getUsers().map(_userDataMapper::mapApiToData)
     }
 
-    override suspend fun getUser(id: String): UserDataModel {
-        return _usersApi.getUserById(id).let(_userDataMapper::mapApiToData)
+    override suspend fun getUser(userLogin: String): UserDataModel {
+        return _usersApi.getUserByLogin(userLogin).let(_userDataMapper::mapApiToData)
     }
 }

@@ -7,9 +7,12 @@ class UserDataMapper {
     fun mapApiToData(user: UserApiModel): UserDataModel {
         return UserDataModel(
             id = user.id.toString(),
-            name = user.login,
+            login = user.login,
             avatarUrl = user.avatarUrl,
-            followers = user.followers
+            followers = user.followers,
+            location = user.location,
+            bio = user.bio,
+            realName = user.name,
         )
     }
 }

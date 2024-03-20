@@ -12,7 +12,7 @@ class UsersDestinationMapperImpl(private val _navController: NavController) : Us
     override fun map(destination: PresentationDestination): UiDestination {
         return when (destination) {
             is UsersPresentationDestination.UserDetails -> {
-                UserDetailsUiDestination(_navController, destination.id)
+                UserDetailsUiDestination(_navController, destination.userLogin)
             }
 
             is BackPresentationDestination -> {
@@ -26,9 +26,9 @@ class UsersDestinationMapperImpl(private val _navController: NavController) : Us
     }
 }
 
-private class UserDetailsUiDestination(private val _navController: NavController, private val _id: String) :
+private class UserDetailsUiDestination(private val _navController: NavController, private val _userLogin: String) :
     UiDestination {
     override fun navigate() {
-        _navController.navigate("users/$_id")
+        _navController.navigate("users/$_userLogin")
     }
 }

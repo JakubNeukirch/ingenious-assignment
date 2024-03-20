@@ -56,7 +56,7 @@ class UsersDataSourceTest {
         val listData = listOf<UserDataModel>(
             UserDataModel(
                 id = "1",
-                name = "login",
+                login = "login",
                 avatarUrl = "avatarUrl",
                 followers = 1
             )
