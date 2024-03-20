@@ -2,6 +2,7 @@ package tech.stonks.ui.page.users
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,24 +21,35 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import tech.stonks.presentation.shared.model.UserPresentationModel
 import tech.stonks.presentation.users.UsersViewModel
 import tech.stonks.presentation.users.model.UsersState
+import tech.stonks.ui.page.users.mapper.UsersDestinationMapper
 
 @Composable
 fun UsersPage(
-    viewModel: UsersViewModel
+    viewModel: UsersViewModel,
+    destinationMapper: UsersDestinationMapper,
 ) {
     LaunchedEffect(viewModel) {
         viewModel.onEntered()
     }
 
+    viewModel.destination.observe(LocalLifecycleOwner.current) { destination ->
+        destinationMapper.map(destination).navigate()
+    }
+
     val state: UsersState by viewModel.state.observeAsState(UsersState.initial())
 
-    Content(state, onRefresh = viewModel::onRefresh)
+    Content(
+        state,
+        onRefresh = viewModel::onRefresh,
+        onUserClicked = viewModel::onUserClicked
+    )
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -45,6 +57,7 @@ fun UsersPage(
 private fun Content(
     state: UsersState,
     onRefresh: () -> Unit,
+    onUserClicked: (String) -> Unit,
 ) {
     val refreshState = rememberPullRefreshState(state.isLoading, onRefresh)
 
@@ -62,7 +75,7 @@ private fun Content(
             ) {
                 items(state.users.size) { index ->
                     val user = state.users[index]
-                    UserItem(user = user)
+                    UserItem(user = user, onUserClicked = onUserClicked)
                 }
             }
 
@@ -76,7 +89,7 @@ private fun Content(
 }
 
 @Composable
-private fun UserItem(user: UserPresentationModel) {
+private fun UserItem(user: UserPresentationModel, onUserClicked: (String) -> Unit) {
     Box(
         modifier = Modifier
             .padding(vertical = 8.dp, horizontal = 16.dp)
@@ -87,6 +100,7 @@ private fun UserItem(user: UserPresentationModel) {
                 shape = RoundedCornerShape(8.dp)
             )
             .clip(RoundedCornerShape(8.dp))
+            .clickable { onUserClicked(user.id) }
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
@@ -133,6 +147,7 @@ fun UsersPagePreview() {
                 UserPresentationModel("2", "Jane Doe", "https://picsum.photos/200/300", 20),
             )
         ),
-        onRefresh = {}
+        onRefresh = {},
+        onUserClicked = {}
     )
 }

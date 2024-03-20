@@ -5,7 +5,7 @@ import tech.stonks.presentation.shared.model.UserPresentationModel
 data class UsersState(
     val users: List<UserPresentationModel>,
     val isLoading: Boolean,
-    val error: Error? = null
+    val error: Error? = null,
 ) {
     companion object {
         fun initial() = UsersState(emptyList(), false, null)
