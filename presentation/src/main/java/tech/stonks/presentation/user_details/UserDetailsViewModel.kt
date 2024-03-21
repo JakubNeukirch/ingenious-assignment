@@ -1,9 +1,7 @@
 package tech.stonks.presentation.user_details
 
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import tech.stonks.presentation.shared.BaseViewModel
 import tech.stonks.presentation.shared.model.BackPresentationDestination
 import tech.stonks.presentation.shared.model.PresentationException
@@ -26,13 +24,14 @@ class UserDetailsViewModel(
         modifyState { it.withLoading(true) }
         viewModelScope.launch {
             try {
-                val user = withContext(Dispatchers.IO) { _getUserRepository.getUser(_userLogin) }
+                val user = _getUserRepository.getUser(_userLogin)
                 modifyState {
                     it.withUser(user).withLoading(false)
                         .withError(null)
                 }
             } catch (ex: PresentationException) {
                 ex.printStackTrace()
+                println("Error: $ex")
                 modifyState {
                     it.withLoading(false)
                         .withError(ex)

@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
@@ -15,8 +16,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 import tech.stonks.presentation.shared.model.BackPresentationDestination
+import tech.stonks.presentation.shared.model.UnknownPresentationException
 import tech.stonks.presentation.shared.model.UserPresentationModel
-import tech.stonks.presentation.user_details.model.UserDetailsError
 import tech.stonks.presentation.user_details.model.UserDetailsState
 import tech.stonks.presentation.user_details.repository.GetUserRepository
 
@@ -40,12 +41,12 @@ class UserDetailsViewModelTest {
     }
 
     @Test
-    fun `when idle should publish initial state`() {
+    fun `when idle should publish initial state`() = runTest {
         _viewModel.state.test().assertValue(UserDetailsState.initial())
     }
 
     @Test
-    fun `when onEntered should publish user details`() {
+    fun `when onEntered should publish user details`() = runTest {
         val user = UserPresentationModel(
             id = "1",
             login = "John Doe",
@@ -66,15 +67,14 @@ class UserDetailsViewModelTest {
     }
 
     @Test
-    fun `when onEntered and load error should publish error`() {
-        val exception = Exception("Error")
+    fun `when onEntered and load error should publish error`() = runTest {
+        val exception = UnknownPresentationException(null)
         val state = UserDetailsState(
             isLoading = false,
             user = null,
-            error = UserDetailsError.UNKNOWN_ERROR
+            error = exception
         )
         coEvery { _getUserDetailsRepository.getUser(USER_ID) } throws exception
-
 
         _viewModel.onEntered()
 
@@ -82,7 +82,7 @@ class UserDetailsViewModelTest {
     }
 
     @Test
-    fun `when onBackPressed should navigate back`() {
+    fun `when onBackPressed should navigate back`() = runTest {
         _viewModel.onBackPressed()
 
         _viewModel.destination.test().assertValue(BackPresentationDestination)

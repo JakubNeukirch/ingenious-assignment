@@ -1,9 +1,7 @@
 package tech.stonks.presentation.users
 
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import tech.stonks.presentation.shared.BaseViewModel
 import tech.stonks.presentation.shared.model.PresentationException
 import tech.stonks.presentation.users.model.UsersPresentationDestination
@@ -28,7 +26,7 @@ class UsersViewModel(
     private fun loadData() = viewModelScope.launch {
         modifyState { it.withLoading(isLoading = true) }
         try {
-            val users = withContext(Dispatchers.IO) { _getUsersRepository.getUsers() }
+            val users = _getUsersRepository.getUsers()
             modifyState {
                 it.withLoading(false)
                     .withUsers(users)
