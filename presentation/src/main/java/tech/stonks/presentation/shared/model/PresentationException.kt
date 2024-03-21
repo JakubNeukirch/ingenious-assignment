@@ -6,6 +6,8 @@ class NetworkPresentationException(exception: Exception?) : PresentationExceptio
 
 class UnauthorizedPresentationException(exception: Exception?) : PresentationException(exception)
 
+class TooManyRequestsPresentationException(exception: Exception?) : PresentationException(exception)
+
 class NotFoundPresentationException(exception: Exception?) : PresentationException(exception)
 
 class UnknownPresentationException(exception: Exception?) : PresentationException(exception)

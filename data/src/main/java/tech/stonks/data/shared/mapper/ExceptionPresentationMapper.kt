@@ -1,5 +1,6 @@
 package tech.stonks.data.shared.mapper
 
+import tech.stonks.data.shared.model.ForbiddenDataException
 import tech.stonks.data.shared.model.NetworkDataException
 import tech.stonks.data.shared.model.NotFoundDataException
 import tech.stonks.data.shared.model.UnauthorizedDataException
@@ -10,6 +11,7 @@ class ExceptionPresentationMapper {
         return when (exception) {
             is NetworkDataException -> NetworkPresentationException(exception)
             is UnauthorizedDataException -> UnauthorizedPresentationException(exception)
+            is ForbiddenDataException -> TooManyRequestsPresentationException(exception)
             is NotFoundDataException -> NotFoundPresentationException(exception)
             else -> UnknownPresentationException(exception)
         }

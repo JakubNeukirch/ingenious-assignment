@@ -1,6 +1,8 @@
 package tech.stonks.ui.page.user_details
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.LocationOn
@@ -16,12 +18,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import tech.stonks.presentation.shared.model.UnknownPresentationException
 import tech.stonks.presentation.shared.model.UserPresentationModel
 import tech.stonks.presentation.user_details.UserDetailsViewModel
 import tech.stonks.presentation.user_details.model.UserDetailsState
 import tech.stonks.ui.R
 import tech.stonks.ui.page.user_details.mapper.UserDetailsDestinationMapper
 import tech.stonks.ui.widgets.BorderedContainer
+import tech.stonks.ui.widgets.StatusView
 
 @Composable
 fun UserDetailsPage(viewModel: UserDetailsViewModel, destinationMapper: UserDetailsDestinationMapper) {
@@ -34,12 +38,12 @@ fun UserDetailsPage(viewModel: UserDetailsViewModel, destinationMapper: UserDeta
         viewModel.onEntered()
     }
 
-    Content(state, onBackPressed = viewModel::onBackPressed)
+    Content(state, onBackPressed = viewModel::onBackPressed, onRefresh = viewModel::onRefresh)
 }
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-private fun Content(state: UserDetailsState, onBackPressed: () -> Unit) {
+private fun Content(state: UserDetailsState, onBackPressed: () -> Unit, onRefresh: () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -58,15 +62,20 @@ private fun Content(state: UserDetailsState, onBackPressed: () -> Unit) {
             )
         }
     ) {
-        if (state.isLoading || state.user == null) {
+        if (state.isLoading) {
             CircularProgressIndicator()
+        } else if (state.error != null || state.user == null) {
+            StatusView(
+                exception = state.error ?: UnknownPresentationException(null),
+                onRetry = onRefresh,
+            )
         } else {
             Box(
                 modifier = Modifier
                     .padding(it)
                     .padding(horizontal = 16.dp)
             ) {
-                Column {
+                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                     BorderedContainer(
                         modifier = Modifier.fillMaxWidth()
                     ) {
@@ -90,8 +99,8 @@ private fun Content(state: UserDetailsState, onBackPressed: () -> Unit) {
                             }
                         }
                     }
-                    Spacer(modifier = Modifier.height(16.dp))
                     state.user!!.location?.let {
+                        Spacer(modifier = Modifier.height(16.dp))
                         BorderedContainer(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -110,6 +119,7 @@ private fun Content(state: UserDetailsState, onBackPressed: () -> Unit) {
                         }
                     }
                     state.user!!.bio?.let {
+                        Spacer(modifier = Modifier.height(16.dp))
                         BorderedContainer(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -125,6 +135,7 @@ private fun Content(state: UserDetailsState, onBackPressed: () -> Unit) {
                             }
                         }
                     }
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
             }
         }
@@ -146,6 +157,7 @@ fun UserDetailsPagePreview() {
             ),
             error = null
         ),
-        onBackPressed = {}
+        onBackPressed = {},
+        onRefresh = {}
     )
 }
