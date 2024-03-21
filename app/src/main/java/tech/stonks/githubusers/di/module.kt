@@ -14,6 +14,7 @@ import tech.stonks.data.shared.mapper.UserPresentationMapper
 import tech.stonks.data.user_details.GetUserRepositoryImpl
 import tech.stonks.data.users.GetUsersRepositoryImpl
 import tech.stonks.datasource.shared.datasource.UsersDataSourceImpl
+import tech.stonks.datasource.shared.mapper.ExceptionDataMapper
 import tech.stonks.datasource.shared.mapper.UserDataMapper
 import tech.stonks.datasource.shared.service.UsersApiService
 import tech.stonks.presentation.user_details.UserDetailsViewModel
@@ -41,6 +42,7 @@ private val dataModule = module {
 
 private val dataSourceModule = module {
     single { UserDataMapper() }
+    single { ExceptionDataMapper() }
     single<UsersDataSource> { get<UsersDataSourceImpl>() }
     singleOf(::UsersDataSourceImpl)
     single<Moshi> {

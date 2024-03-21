@@ -3,4 +3,5 @@
     <string name="users_title">Github Users</string>
     <string name="user_details_title">User Details</string>
     <string name="user_details_bio">Bio</string>
+    <string name="back">Back button</string>
 </resources>

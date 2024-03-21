@@ -1,8 +1,8 @@
 package tech.stonks.ui.page.user_details
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -19,26 +20,37 @@ import tech.stonks.presentation.shared.model.UserPresentationModel
 import tech.stonks.presentation.user_details.UserDetailsViewModel
 import tech.stonks.presentation.user_details.model.UserDetailsState
 import tech.stonks.ui.R
+import tech.stonks.ui.page.user_details.mapper.UserDetailsDestinationMapper
 import tech.stonks.ui.widgets.BorderedContainer
 
 @Composable
-fun UserDetailsPage(viewModel: UserDetailsViewModel) {
+fun UserDetailsPage(viewModel: UserDetailsViewModel, destinationMapper: UserDetailsDestinationMapper) {
     val state by viewModel.state.observeAsState(UserDetailsState.initial())
-    //todo add navigation
+    viewModel.destination.observe(LocalLifecycleOwner.current) { destination ->
+        destinationMapper.map(destination).navigate()
+    }
+
     LaunchedEffect(viewModel) {
         viewModel.onEntered()
     }
-    Log.d("Content", "state: ${state}")
 
-    Content(state)
+    Content(state, onBackPressed = viewModel::onBackPressed)
 }
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-private fun Content(state: UserDetailsState) {
+private fun Content(state: UserDetailsState, onBackPressed: () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
+                navigationIcon = {
+                    IconButton(onClick = onBackPressed) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(id = R.string.back)
+                        )
+                    }
+                },
                 title = { Text(text = state.user?.login ?: stringResource(id = R.string.user_details_title)) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.background,
@@ -133,6 +145,7 @@ fun UserDetailsPagePreview() {
                 followers = 1
             ),
             error = null
-        )
+        ),
+        onBackPressed = {}
     )
 }
