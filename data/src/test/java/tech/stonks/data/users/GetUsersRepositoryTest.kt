@@ -1,20 +1,21 @@
 package tech.stonks.data.users
 
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.every
-import io.mockk.mockk
+import io.mockk.*
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import tech.stonks.data.shared.datasource.UsersDataSource
+import tech.stonks.data.shared.mapper.ExceptionPresentationMapper
 import tech.stonks.data.shared.mapper.UserPresentationMapper
+import tech.stonks.data.shared.model.UnknownDataException
 import tech.stonks.data.shared.model.UserDataModel
+import tech.stonks.presentation.shared.model.UnknownPresentationException
 import tech.stonks.presentation.shared.model.UserPresentationModel
 import tech.stonks.presentation.users.repository.GetUsersRepository
 
-class GetUserRepositoryTest {
+class GetUsersRepositoryTest {
+    private lateinit var exceptionMapper: ExceptionPresentationMapper
     private lateinit var userDataSource: UsersDataSource
     private lateinit var userMapper: UserPresentationMapper
     private lateinit var getUsersRepository: GetUsersRepository
@@ -22,8 +23,9 @@ class GetUserRepositoryTest {
     @Before
     fun setUp() {
         userDataSource = mockk()
+        exceptionMapper = mockk()
         userMapper = mockk()
-        getUsersRepository = GetUsersRepositoryImpl(userDataSource, userMapper)
+        getUsersRepository = GetUsersRepositoryImpl(userDataSource, userMapper, exceptionMapper)
     }
 
     @Test
@@ -52,15 +54,18 @@ class GetUserRepositoryTest {
     }
 
     @Test
-    fun `when getUsers throws error then forward error`() = runTest {
+    fun `when getUsers throws error then map exception`() = runTest {
         // Given
-        val error = Exception()
+        val error = UnknownDataException(null)
+        val presentationException = UnknownPresentationException(null)
         coEvery { userDataSource.getUsers() } throws error
+        every { exceptionMapper.map(error) } returns presentationException
 
         // When
         val result = runCatching { getUsersRepository.getUsers() }
 
         // Then
-        assertEquals(error, result.exceptionOrNull())
+        verify { exceptionMapper.map(error) }
+        assertEquals(presentationException, result.exceptionOrNull())
     }
 }

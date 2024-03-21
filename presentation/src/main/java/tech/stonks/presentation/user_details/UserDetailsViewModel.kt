@@ -1,7 +1,9 @@
 package tech.stonks.presentation.user_details
 
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import tech.stonks.presentation.shared.BaseViewModel
 import tech.stonks.presentation.shared.model.BackPresentationDestination
 import tech.stonks.presentation.user_details.model.UserDetailsError
@@ -16,9 +18,12 @@ class UserDetailsViewModel(
         modifyState { it.withLoading(true) }
         viewModelScope.launch {
             try {
-                val user = _getUserRepository.getUser(_userLogin)
+                val user = withContext(Dispatchers.IO) { _getUserRepository.getUser(_userLogin) }
                 modifyState { it.withUser(user).withLoading(false) }
             } catch (ex: Exception) {
+                when (ex) {
+
+                }
                 //todo handle more errors
                 ex.printStackTrace()
                 modifyState { it.withError(UserDetailsError.UNKNOWN_ERROR).withLoading(false) }

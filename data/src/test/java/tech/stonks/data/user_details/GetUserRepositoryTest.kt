@@ -1,29 +1,31 @@
 package tech.stonks.data.user_details
 
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.every
-import io.mockk.mockk
+import io.mockk.*
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import tech.stonks.data.shared.datasource.UsersDataSource
+import tech.stonks.data.shared.mapper.ExceptionPresentationMapper
 import tech.stonks.data.shared.mapper.UserPresentationMapper
+import tech.stonks.data.shared.model.UnknownDataException
 import tech.stonks.data.shared.model.UserDataModel
+import tech.stonks.presentation.shared.model.UnknownPresentationException
 import tech.stonks.presentation.shared.model.UserPresentationModel
 import tech.stonks.presentation.user_details.repository.GetUserRepository
 
 class GetUserRepositoryTest {
     private lateinit var _userDataSource: UsersDataSource
     private lateinit var _userMapper: UserPresentationMapper
+    private lateinit var _exceptionMapper: ExceptionPresentationMapper
     private lateinit var _getUserRepository: GetUserRepository
 
     @Before
     fun setUp() {
         _userDataSource = mockk()
         _userMapper = mockk()
-        _getUserRepository = GetUserRepositoryImpl(_userDataSource, _userMapper)
+        _exceptionMapper = mockk()
+        _getUserRepository = GetUserRepositoryImpl(_userDataSource, _userMapper, _exceptionMapper)
     }
 
     @Test
@@ -44,16 +46,19 @@ class GetUserRepositoryTest {
     }
 
     @Test
-    fun `when getUser throws error then forward error`() = runTest {
+    fun `when getUser throws error then map exception`() = runTest {
         // Given
-        val error = Exception()
+        val error = UnknownDataException(null)
+        val presentationException = UnknownPresentationException(null)
         coEvery { _userDataSource.getUser("1") } throws error
+        every { _exceptionMapper.map(error) } returns presentationException
 
         // When
         val result = runCatching { _getUserRepository.getUser("1") }
 
         // Then
         coVerify { _userDataSource.getUser("1") }
-        assertEquals(error, result.exceptionOrNull())
+        verify { _exceptionMapper.map(error) }
+        assertEquals(presentationException, result.exceptionOrNull())
     }
 }

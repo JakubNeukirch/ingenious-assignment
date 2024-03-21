@@ -7,8 +7,9 @@ import tech.stonks.presentation.shared.model.PresentationDestination
 import tech.stonks.presentation.shared.model.SingleLiveEvent
 
 abstract class BaseViewModel<STATE>(initialState: STATE) : ViewModel() {
-    val state: LiveData<STATE> get() = _state
     private val _state = MutableLiveData<STATE>(initialState)
+    val state: LiveData<STATE> get() = _state
+
     private val _destination = SingleLiveEvent<PresentationDestination>()
     val destination: LiveData<PresentationDestination> get() = _destination
 
