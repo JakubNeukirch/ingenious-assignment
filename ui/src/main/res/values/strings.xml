@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="users_title">Github Users</string>
+    <string name="user_details_title">User Details</string>
+    <string name="user_details_bio">Bio</string>
+    <string name="back">Back button</string>
+</resources>

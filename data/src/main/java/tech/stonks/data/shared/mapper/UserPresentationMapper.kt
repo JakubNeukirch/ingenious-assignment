@@ -7,9 +7,12 @@ class UserPresentationMapper {
     fun map(user: UserDataModel): UserPresentationModel {
         return UserPresentationModel(
             id = user.id,
-            name = user.name,
+            login = user.login,
             avatarUrl = user.avatarUrl,
-            followers = user.followers
+            followers = user.followers,
+            location = user.location,
+            bio = user.bio,
+            realName = user.realName,
         )
     }
 }

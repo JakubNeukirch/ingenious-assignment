@@ -37,6 +37,8 @@ data class UserApiModel(
     val receivedEventsUrl: String,
     @Json(name = "type")
     val type: String,
+    @Json(name = "bio")
+    val bio: String?,
     @Json(name = "site_admin")
     val siteAdmin: Boolean,
     @Json(name = "name")
