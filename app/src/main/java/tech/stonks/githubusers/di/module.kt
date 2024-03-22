@@ -10,6 +10,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import tech.stonks.data.shared.datasource.UsersDataSource
+import tech.stonks.data.shared.mapper.ExceptionPresentationMapper
 import tech.stonks.data.shared.mapper.UserPresentationMapper
 import tech.stonks.data.user_details.GetUserRepositoryImpl
 import tech.stonks.data.users.GetUsersRepositoryImpl
@@ -38,6 +39,7 @@ private val dataModule = module {
     singleOf(::GetUsersRepositoryImpl)
     singleOf(::GetUserRepositoryImpl)
     single { UserPresentationMapper() }
+    single { ExceptionPresentationMapper() }
 }
 
 private val dataSourceModule = module {

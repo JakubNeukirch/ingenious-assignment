@@ -25,6 +25,7 @@ import tech.stonks.presentation.users.model.UsersState
 import tech.stonks.ui.R
 import tech.stonks.ui.page.users.mapper.UsersDestinationMapper
 import tech.stonks.ui.widgets.BorderedContainer
+import tech.stonks.ui.widgets.StatusView
 
 @Composable
 fun UsersPage(
@@ -75,12 +76,16 @@ private fun Content(
                 )
                 .padding(it)
         ) {
-            LazyColumn(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                items(state.users.size) { index ->
-                    val user = state.users[index]
-                    UserItem(user = user, onUserClicked = onUserClicked)
+            if (state.error != null) {
+                StatusView(state.error!!, onRetry = onRefresh)
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    items(state.users.size) { index ->
+                        val user = state.users[index]
+                        UserItem(user = user, onUserClicked = onUserClicked)
+                    }
                 }
             }
 

@@ -3,5 +3,16 @@
     <string name="users_title">Github Users</string>
     <string name="user_details_title">User Details</string>
     <string name="user_details_bio">Bio</string>
+    <string name="error_title_network">No Network</string>
+    <string name="error_message_network">Are you connected to the WiFi or Mobile Transfer?</string>
+    <string name="error_title_too_many_requests">Too Many Requests</string>
+    <string name="error_message_too_many_requests">You refresh too often! Wait a bit and try again.</string>
+    <string name="error_title_unauthorized">Unauthorized</string>
+    <string name="error_message_unauthorized">You don\'t have access to this resource</string>
+    <string name="error_title_not_found">Not Found</string>
+    <string name="error_message_not_found">No such resource, how did we get in here?</string>
+    <string name="error_title_unknown">Unknown Error</string>
+    <string name="error_message_unknown">That is probably something on our side :/ Try again later</string>
+    <string name="error_retry">Retry</string>
     <string name="back">Back button</string>
 </resources>

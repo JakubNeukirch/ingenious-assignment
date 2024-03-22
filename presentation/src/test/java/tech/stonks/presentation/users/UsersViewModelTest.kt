@@ -18,6 +18,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
+import tech.stonks.presentation.shared.model.UnknownPresentationException
 import tech.stonks.presentation.shared.model.UserPresentationModel
 import tech.stonks.presentation.users.model.UsersState
 import tech.stonks.presentation.users.repository.GetUsersRepository
@@ -38,7 +39,7 @@ class UsersViewModelTest {
     }
 
     @Test
-    fun `when idle should publish initial state`() {
+    fun `when idle should publish initial state`() = runTest {
         _viewModel.state.test().assertValue(UsersState.initial())
     }
 
@@ -58,13 +59,15 @@ class UsersViewModelTest {
 
     @Test
     fun `when onEntered with error should publish error`() = runTest {
-        coEvery { _getUsersRepository.getUsers() } throws Exception()
+        val exception = UnknownPresentationException(null)
+        coEvery { _getUsersRepository.getUsers() } throws exception
 
         _viewModel.onEntered()
 
         coVerify { _getUsersRepository.getUsers() }
+
         _viewModel.state.test()
-            .assertValue(UsersState(isLoading = false, error = UsersState.Error.UNKNOWN, users = emptyList()))
+            .assertValue(UsersState(isLoading = false, error = exception, users = emptyList()))
     }
 
     @After

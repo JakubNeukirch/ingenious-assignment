@@ -3,6 +3,7 @@ package tech.stonks.presentation.users
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import tech.stonks.presentation.shared.BaseViewModel
+import tech.stonks.presentation.shared.model.PresentationException
 import tech.stonks.presentation.users.model.UsersPresentationDestination
 import tech.stonks.presentation.users.model.UsersState
 import tech.stonks.presentation.users.repository.GetUsersRepository
@@ -23,19 +24,23 @@ class UsersViewModel(
     }
 
     private fun loadData() = viewModelScope.launch {
-        modifyState { it.copy(isLoading = true) }
+        modifyState { it.withLoading(isLoading = true) }
         try {
-            _getUsersRepository.getUsers().let { users ->
-                modifyState { it.copy(isLoading = false, users = users) }
+            val users = _getUsersRepository.getUsers()
+            modifyState {
+                it.withLoading(false)
+                    .withUsers(users)
+                    .withError(null)
+            }
+        } catch (ex: PresentationException) {
+            ex.printStackTrace()
+            modifyState {
+                it.withLoading(false)
+                    .withError(ex)
             }
         } catch (ex: Exception) {
             ex.printStackTrace()
-            modifyState {
-                it.copy(
-                    isLoading = false,
-                    error = UsersState.Error.UNKNOWN
-                )
-            }//todo add handling other error types
+            throw IllegalStateException("Unhandled exception", ex)
         }
     }
 }

@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import tech.stonks.presentation.shared.BaseViewModel
 import tech.stonks.presentation.shared.model.BackPresentationDestination
-import tech.stonks.presentation.user_details.model.UserDetailsError
+import tech.stonks.presentation.shared.model.PresentationException
 import tech.stonks.presentation.user_details.model.UserDetailsState
 import tech.stonks.presentation.user_details.repository.GetUserRepository
 
@@ -13,15 +13,32 @@ class UserDetailsViewModel(
     private val _getUserRepository: GetUserRepository,
 ) : BaseViewModel<UserDetailsState>(UserDetailsState.initial()) {
     fun onEntered() {
+        loadData()
+    }
+
+    fun onRefresh() {
+        loadData()
+    }
+
+    private fun loadData() {
         modifyState { it.withLoading(true) }
         viewModelScope.launch {
             try {
                 val user = _getUserRepository.getUser(_userLogin)
-                modifyState { it.withUser(user).withLoading(false) }
-            } catch (ex: Exception) {
-                //todo handle more errors
+                modifyState {
+                    it.withUser(user).withLoading(false)
+                        .withError(null)
+                }
+            } catch (ex: PresentationException) {
                 ex.printStackTrace()
-                modifyState { it.withError(UserDetailsError.UNKNOWN_ERROR).withLoading(false) }
+                println("Error: $ex")
+                modifyState {
+                    it.withLoading(false)
+                        .withError(ex)
+                }
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+                throw IllegalStateException("Unhandled exception", ex)
             }
         }
     }
