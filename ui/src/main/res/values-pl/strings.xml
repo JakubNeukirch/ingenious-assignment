@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="users_title">Użytkownicy Github</string>
+    <string name="user_details_title">Dane Użytkownika</string>
+    <string name="user_details_bio">Opis</string>
+    <string name="error_title_network">Brak Internetu</string>
+    <string name="error_message_network">Czy masz połączenie WiFi lub dane mobilne?</string>
+    <string name="error_title_too_many_requests">Za dużo zapytań</string>
+    <string name="error_message_too_many_requests">Odświeżasz za często! Spróbuj ponownie później.</string>
+    <string name="error_title_unauthorized">Brak dostępu</string>
+    <string name="error_message_unauthorized">Nie masz dostępu do tych zasobów</string>
+    <string name="error_title_not_found">Nie znaleziono</string>
+    <string name="error_message_not_found">Nie znaleziono zasobu, jak się tu znalazłeś?</string>
+    <string name="error_title_unknown">Nieznany błąd</string>
+    <string name="error_message_unknown">To błąd po naszej stronie. Spróbuj ponownie później</string>
+    <string name="error_retry">Odśwież</string>
+    <string name="back">Przycisk wstecz</string>
+</resources>
